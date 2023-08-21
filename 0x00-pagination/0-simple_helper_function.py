@@ -1,5 +1,5 @@
-#!/usr/bin/python3
-""" Pagination """
+#!/usr/bin/env python3
+""" Pagination Algo in Python """
 
 
 def index_range(page, page_size):
