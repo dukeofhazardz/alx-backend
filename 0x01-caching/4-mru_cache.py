@@ -15,8 +15,7 @@ class MRUCache(BaseCaching):
             return
         self.cache_data[key] = item
         if len(self.cache_data.keys()) > self.MAX_ITEMS:
-            keys = list(self.cache_data.keys())
-            discard_key = keys[3]
+            discard_key = list(self.cache_data.keys())[-1]
             print("DISCARD: {}".format(discard_key))
             del self.cache_data[discard_key]
 
