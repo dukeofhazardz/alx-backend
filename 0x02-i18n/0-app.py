@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" i18n Application """
+""" Implementing an i18n Application """
 
 from flask import Flask, render_template
 
