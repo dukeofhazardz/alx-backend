@@ -20,6 +20,8 @@ class Config:
 @babel.localeselector
 def get_locale() -> Optional[str]:
     """ Returns the best match with our supported languages """
+    if 'locale' in request.args and request.args['locale'] in Config.LANGUAGES:
+        return request.args['locale']
     return request.accept_languages.best_match(Config.LANGUAGES)
 
 
