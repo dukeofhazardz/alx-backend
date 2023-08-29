@@ -29,7 +29,8 @@ app.config.from_object(Config)
 @app.route('/', strict_slashes=False)
 def home() -> str:
     """ Returns the best match with our supported languages """
-    return render_template('3-index.html')
+    return render_template('3-index.html', home_title=_('home_title'),
+                           home_header=_('home_header'))
 
 
 if __name__ == "__main__":
