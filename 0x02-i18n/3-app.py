@@ -28,7 +28,6 @@ app.config.from_object(Config)
 
 @app.route('/', strict_slashes=False)
 def home() -> str:
-    """ Renders the Home/Index HTML page """
     return render_template('3-index.html', home_title=_('home_title'),
                            home_header=_('home_header'))
 
