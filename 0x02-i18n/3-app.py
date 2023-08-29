@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """ i18n Application """
 
+from typing import Optional
 from flask import Flask, render_template, request
 from flask_babel import Babel, _
 
 
-app = Flask('__name__')
-babel = Babel(app)
+app: Flask = Flask('__name__')
+babel: Babel = Babel(app)
 
 
 class Config:
@@ -17,7 +18,7 @@ class Config:
 
 
 @babel.localeselector
-def get_locale():
+def get_locale() -> Optional[str]:
     """ Returns the best match with our supported languages """
     return request.accept_languages.best_match(Config.LANGUAGES)
 
@@ -26,8 +27,9 @@ app.config.from_object(Config)
 
 
 @app.route('/', strict_slashes=False)
-def home():
-    return render_template('1-index.html')
+def home() -> str:
+    """ Returns the best match with our supported languages """
+    return render_template('3-index.html')
 
 
 if __name__ == "__main__":

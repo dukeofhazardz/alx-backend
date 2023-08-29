@@ -5,8 +5,8 @@ from flask import Flask, render_template
 from flask_babel import Babel
 
 
-app = Flask('__name__')
-babel = Babel(app)
+app: Flask = Flask('__name__')
+babel: Babel = Babel(app)
 
 
 class Config:
@@ -20,7 +20,8 @@ app.config.from_object(Config)
 
 
 @app.route('/', strict_slashes=False)
-def home():
+def home() -> str:
+    """ Render the Home/Index HTML page """
     return render_template('1-index.html')
 
 
