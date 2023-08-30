@@ -3,7 +3,7 @@
 
 from typing import Optional
 from flask import Flask, render_template, request
-from flask_babel import Babel, _
+from flask_babel import Babel, gettext
 
 
 app: Flask = Flask('__name__')
@@ -29,8 +29,8 @@ app.config.from_object(Config)
 @app.route('/', strict_slashes=False)
 def home() -> str:
     """ Render the Home/Index HTML page """
-    return render_template('3-index.html', home_title=_('home_title'),
-                           home_header=_('home_header'))
+    return render_template('3-index.html', home_title=gettext('home_title'),
+                           home_header=gettext('home_header'))
 
 
 if __name__ == "__main__":
