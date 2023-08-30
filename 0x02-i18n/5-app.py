@@ -51,11 +51,11 @@ def get_locale() -> Optional[str]:
 app.config.from_object(Config)
 
 
-@app.route('/', strict_slashes=False)
+"""@app.route('/', strict_slashes=False)
 def home() -> str:
     """ Renders the Home/Index HTML page """
     return render_template('5-index.html', home_title=_('home_title'),
-                           home_header=_('home_header'), user=g.user)
+                           home_header=_('home_header'), user=g.user)"""
 
 
 if __name__ == "__main__":
