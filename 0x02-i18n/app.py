@@ -3,7 +3,9 @@
 
 from typing import Optional
 from flask import Flask, render_template, request, g
-from flask_babel import Babel, _
+from flask_babel import Babel, _, format_datetime
+from datetime import datetime
+import pytz
 
 
 app: Flask = Flask('__name__')
@@ -51,14 +53,34 @@ def get_locale() -> Optional[str]:
     return request.accept_languages.best_match(Config.LANGUAGES)
 
 
+@babel.timezoneselector
+def get_timezone():
+    """ Returns the best match with our supported timezones """
+    if g.user and g.user['timezone']:
+        try:
+            pytz.timezone(g.user['timezone'])
+            return g.user['timezone']
+        except pytz.exceptions.UnknownTimeZoneError:
+            pass
+    elif 'timezone' in request.args:
+        try:
+            pytz.timezone(request.args['timezone'])
+            return request.args['timezone']
+        except pytz.exceptions.UnknownTimeZoneError:
+            pass
+    return Config.BABEL_DEFAULT_TIMEZONE
+
+
 app.config.from_object(Config)
 
 
 @app.route('/', strict_slashes=False)
 def home() -> str:
     """ Renders the Home/Index HTML page """
-    return render_template('6-index.html', home_title=_('home_title'),
-                           home_header=_('home_header'), user=g.user)
+    current_time = format_datetime(datetime.now())
+    return render_template('index.html', home_title=_('home_title'),
+                           home_header=_('home_header'), user=g.user,
+                           current_time=current_time)
 
 
 if __name__ == "__main__":

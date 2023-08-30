@@ -4,6 +4,7 @@
 from typing import Optional
 from flask import Flask, render_template, request, g
 from flask_babel import Babel, _
+import pytz
 
 
 app: Flask = Flask('__name__')
@@ -49,6 +50,24 @@ def get_locale() -> Optional[str]:
             Config.LANGUAGES:
         return request.args['locale']
     return request.accept_languages.best_match(Config.LANGUAGES)
+
+
+@babel.timezoneselector
+def get_timezone():
+    """ Returns the best match with our supported timezones """
+    if g.user and g.user['timezone']:
+        try:
+            pytz.timezone(g.user['timezone'])
+            return g.user['timezone']
+        except pytz.exceptions.UnknownTimeZoneError:
+            pass
+    elif 'timezone' in request.args:
+        try:
+            pytz.timezone(request.args['timezone'])
+            return request.args['timezone']
+        except pytz.exceptions.UnknownTimeZoneError:
+            pass
+    return Config.BABEL_DEFAULT_TIMEZONE
 
 
 app.config.from_object(Config)
